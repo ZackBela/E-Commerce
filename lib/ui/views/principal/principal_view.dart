@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:styled_widget/styled_widget.dart';
 
-import '../../widgets/BottomNavBarButton.dart';
+import '../../widgets/dumb/BottomNavBarButton.dart';
 import 'principal_viewmodel.dart';
 
 class PrincipalView extends StackedView<PrincipalViewModel> {
@@ -20,30 +20,30 @@ class PrincipalView extends StackedView<PrincipalViewModel> {
       backgroundColor: kcBackgroundColor,
       body: viewModel.getViewForIndex(),
       bottomNavigationBar: BottomAppBar(
-        elevation: 1.0,
+        elevation: 0.0,
         color: Colors.white,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             BottomNavBarButton(
               title: "Home",
-              icon: 'assets/Icons/home.svg',
+              icon: 'assets/icons/homepage.png',
               tabColor: viewModel.currentTab == 0 ? Colors.blue : kcLightGrey,
               ontap: () {
                 viewModel.changeScreen(0);
               },
             ),
             BottomNavBarButton(
-              title: "Products",
-              icon: 'assets/Icons/home.svg',
+              title: "Favorites",
+              icon: 'assets/icons/heart.png',
               tabColor: viewModel.currentTab == 1 ? Colors.blue : kcLightGrey,
               ontap: () {
                 viewModel.changeScreen(1);
               },
             ),
             BottomNavBarButton(
-              title: "Favorites",
-              icon: 'assets/Icons/home.svg',
+              title: "Cart",
+              icon: 'assets/icons/bag.png',
               tabColor: viewModel.currentTab == 2 ? Colors.blue : kcLightGrey,
               ontap: () {
                 viewModel.changeScreen(2);

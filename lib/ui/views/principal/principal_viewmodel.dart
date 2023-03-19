@@ -1,3 +1,6 @@
+import 'package:e_commerce/ui/views/cart/cart_view.dart';
+import 'package:e_commerce/ui/views/favorites/favorites_view.dart';
+import 'package:e_commerce/ui/views/home/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -14,17 +17,11 @@ class PrincipalViewModel extends BaseViewModel {
   Widget getViewForIndex() {
     switch (_currentTab) {
       case 0:
-        return Container(
-          color: Colors.black,
-        );
+        return HomeView();
       case 1:
-        return Container(
-          color: Colors.green,
-        );
+        return FavoritesView();
       case 2:
-        return Container(
-          color: Colors.red,
-        );
+        return CartView();
       default:
         return Container(
           color: Colors.white,

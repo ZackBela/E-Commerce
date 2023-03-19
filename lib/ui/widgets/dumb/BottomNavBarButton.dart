@@ -18,14 +18,14 @@ class BottomNavBarButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: screenHeight(context) * .08,
-      width: screenWidth(context) * .2,
+      width: screenWidth(context) * .33,
       child: MaterialButton(
-        minWidth: 40,
+        // minWidth: 40,
         onPressed: ontap,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SvgPicture.asset(
+            Image.asset(
               height: screenWidth(context) * .06,
               width: screenWidth(context) * .06,
               icon!,

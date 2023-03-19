@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -75,4 +76,34 @@ double getResponsiveFontSize(BuildContext context,
       max);
 
   return responsiveSize;
+}
+
+Size screenSize(
+  BuildContext context,
+) =>
+    MediaQuery.of(context).size;
+
+double screenAspectRatio(
+  BuildContext context,
+) =>
+    MediaQuery.of(context).size.height / screenSize(context).width;
+
+double pSh({required BuildContext context, double percentage = 1}) {
+  double i = screenAspectRatio(context) >= 2.14
+      ? Platform.isIOS
+          ? .96
+          : .94
+      : Platform.isIOS
+          ? 1.07
+          : 1.03;
+  return screenSize(context).height * i * percentage;
+}
+
+double pSw({required BuildContext context, double percentage = 1}) {
+  double i = screenAspectRatio(context) < 2.14
+      ? Platform.isIOS
+          ? 1.2
+          : 1.03
+      : 1.0;
+  return screenSize(context).width * i * percentage;
 }
