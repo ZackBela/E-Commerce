@@ -1,8 +1,6 @@
 import 'package:e_commerce/ui/common/app_colors.dart';
 import 'package:flutter/material.dart';
 
-import 'package:styled_widget/styled_widget.dart';
-
 import '../../common/ui_helpers.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -11,6 +9,7 @@ class CustomTextField extends StatelessWidget {
     this.texteditingController,
     this.validator,
     this.onchanged,
+    this.onSubmit,
     this.prefix,
     // this.suffix,
     required this.hintText,
@@ -21,7 +20,8 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController? texteditingController;
   final String? hintText;
   final String? Function(String?)? validator;
-  final String? Function(String?)? onchanged;
+  final String? Function(String?)? onSubmit;
+  final Function(String?)? onchanged;
   final Widget? prefix;
   final TextInputAction? textInputAction;
 
@@ -85,6 +85,7 @@ class CustomTextField extends StatelessWidget {
       ),
       validator: validator,
       onChanged: onchanged,
+      onFieldSubmitted: onSubmit,
     );
   }
 }

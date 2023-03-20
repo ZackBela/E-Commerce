@@ -10,8 +10,12 @@ class cartItem extends StatelessWidget {
   cartItem({
     Key? key,
     required this.product,
+    required this.onplusTap,
+    required this.onminusTap,
   }) : super(key: key);
   CartItem? product;
+  final Function()? onplusTap;
+  final Function()? onminusTap;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -64,9 +68,9 @@ class cartItem extends StatelessWidget {
                         .decorated(
                             border: Border.all(color: kcPrimaryColor),
                             shape: BoxShape.circle)
-                        .gestures(onTap: () {
-                      // viewModel.decrementCounter();
-                    }),
+                        .gestures(
+                          onTap: onminusTap,
+                        ),
                     horizontalSpaceSmall,
                     horizontalSpaceTiny,
                     CustomText(
@@ -86,9 +90,9 @@ class cartItem extends StatelessWidget {
                         .decorated(
                             border: Border.all(color: kcPrimaryColor),
                             shape: BoxShape.circle)
-                        .gestures(onTap: () {
-                      // viewModel.incrementCounter();
-                    }),
+                        .gestures(
+                          onTap: onplusTap,
+                        ),
                   ],
                 ),
               ],

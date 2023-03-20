@@ -63,12 +63,42 @@ class LocalDbServicesService with ListenableServiceMixin {
 
   Future<void> addNewCartItem({required CartItem item}) async {
     final isar = await db;
+
     await isar!
         .writeTxn(() async => await isar.collection<CartItem>().put(item));
   }
 
+  Future<bool> testIfCartContainsItem(String title) async {
+    final isar = await db;
+    final item = await isar!
+        .collection<CartItem>()
+        .filter()
+        .titleEqualTo(title)
+        .findAll();
 
+    return item.isNotEmpty ? true : false;
+  }
 
+  Future<void> updateCartItem(CartItem item, int newQuantite) async {
+    final isar = await db;
+    CartItem? newitem = await isar!.collection<CartItem>().get(item.id);
+    newitem!.quantite = newQuantite;
+    print('newQuantite ${newQuantite}');
+    await isar.writeTxn(() async {
+      await isar.collection<CartItem>().put(newitem);
+    });
+  }
+
+  Future<void> deleteCartItem(int id) async {
+    final isar = await db;
+    await isar!.writeTxn(() async =>
+        await isar.collection<CartItem>().filter().idEqualTo(id).deleteAll());
+  }
+
+  Future<void> deleteCart() async {
+    final isar = await db;
+    await isar!.writeTxn(() async => await isar.collection<CartItem>().clear());
+  }
 
   Future<Isar> openDB() async {
     final dir = await getApplicationSupportDirectory();

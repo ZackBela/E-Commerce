@@ -27,7 +27,7 @@ class PrincipalView extends StackedView<PrincipalViewModel> {
           children: [
             BottomNavBarButton(
               title: "Home",
-              icon: 'assets/icons/homepage.png',
+              icon: 'assets/icons/icons8-accueil-24.png',
               tabColor: viewModel.currentTab == 0 ? Colors.blue : kcLightGrey,
               ontap: () {
                 viewModel.changeScreen(0);
@@ -35,7 +35,7 @@ class PrincipalView extends StackedView<PrincipalViewModel> {
             ),
             BottomNavBarButton(
               title: "Favorites",
-              icon: 'assets/icons/heart.png',
+              icon: 'assets/icons/icons8-coeurs-24.png',
               tabColor: viewModel.currentTab == 1 ? Colors.blue : kcLightGrey,
               ontap: () {
                 viewModel.changeScreen(1);
@@ -43,7 +43,7 @@ class PrincipalView extends StackedView<PrincipalViewModel> {
             ),
             BottomNavBarButton(
               title: "Cart",
-              icon: 'assets/icons/bag.png',
+              icon: 'assets/icons/icons8-caddie-32.png',
               tabColor: viewModel.currentTab == 2 ? Colors.blue : kcLightGrey,
               ontap: () {
                 viewModel.changeScreen(2);

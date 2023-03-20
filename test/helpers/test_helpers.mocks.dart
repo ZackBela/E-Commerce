@@ -741,6 +741,49 @@ class MockLocalDbServicesService extends _i1.Mock
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
   @override
+  _i5.Future<bool> testIfCartContainsItem(String? title) => (super.noSuchMethod(
+        Invocation.method(
+          #testIfCartContainsItem,
+          [title],
+        ),
+        returnValue: _i5.Future<bool>.value(false),
+        returnValueForMissingStub: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
+  @override
+  _i5.Future<void> updateCartItem(
+    _i11.CartItem? item,
+    int? newQuantite,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateCartItem,
+          [
+            item,
+            newQuantite,
+          ],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+  @override
+  _i5.Future<void> deleteCartItem(int? id) => (super.noSuchMethod(
+        Invocation.method(
+          #deleteCartItem,
+          [id],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+  @override
+  _i5.Future<void> deleteCart() => (super.noSuchMethod(
+        Invocation.method(
+          #deleteCart,
+          [],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+  @override
   _i5.Future<_i2.Isar> openDB() => (super.noSuchMethod(
         Invocation.method(
           #openDB,

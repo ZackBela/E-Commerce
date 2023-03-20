@@ -116,8 +116,11 @@ class StackedRouter extends _i1.RouterBase {
       );
     },
     _i7.ProductsPageView: (data) {
+      final args = data.getArgs<ProductsPageViewArguments>(
+        orElse: () => const ProductsPageViewArguments(),
+      );
       return _i9.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i7.ProductsPageView(),
+        builder: (context) => _i7.ProductsPageView(key: args.key),
         settings: data,
         maintainState: false,
       );
@@ -150,6 +153,17 @@ class ProductDetailsViewArguments {
   @override
   String toString() {
     return '{"key": "$key", "product": "$product"}';
+  }
+}
+
+class ProductsPageViewArguments {
+  const ProductsPageViewArguments({this.key});
+
+  final _i9.Key? key;
+
+  @override
+  String toString() {
+    return '{"key": "$key"}';
   }
 }
 
@@ -227,14 +241,16 @@ extension NavigatorStateExtension on _i10.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToProductsPageView([
+  Future<dynamic> navigateToProductsPageView({
+    _i9.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return navigateTo<dynamic>(Routes.productsPageView,
+        arguments: ProductsPageViewArguments(key: key),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -328,14 +344,16 @@ extension NavigatorStateExtension on _i10.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithProductsPageView([
+  Future<dynamic> replaceWithProductsPageView({
+    _i9.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return replaceWith<dynamic>(Routes.productsPageView,
+        arguments: ProductsPageViewArguments(key: key),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

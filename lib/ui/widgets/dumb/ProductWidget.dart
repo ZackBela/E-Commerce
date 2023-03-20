@@ -1,6 +1,5 @@
 import 'package:e_commerce/ui/widgets/dumb/CustomText.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 import '../../common/app_colors.dart';
@@ -32,10 +31,10 @@ class ProductWidget extends StatelessWidget {
               fit: BoxFit.cover,
             ).padding(all: pSh(context: context, percentage: .02)).center(),
             Container(
-              child: SvgPicture.asset(
-                'assets/icons/heart (1).svg',
-                color: isLiked! ? Colors.red : kcMediumGrey,
-                height: pSh(context: context, percentage: .022),
+              child: Image.asset(
+                'assets/icons/icons8-favorite-50.png',
+                color: isLiked! ? Colors.red : kcMediumGrey.withOpacity(.5),
+                height: pSh(context: context, percentage: .03),
               ).padding(
                 all: pSh(context: context, percentage: .009),
                 // right: pSh(context: context, percentage: .009),

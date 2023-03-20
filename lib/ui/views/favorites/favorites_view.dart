@@ -1,5 +1,5 @@
-import 'package:e_commerce/ui/common/app_colors.dart';
 import 'package:e_commerce/ui/common/constant_data.dart';
+import 'package:e_commerce/ui/common/helper_methodes.dart';
 import 'package:e_commerce/ui/common/ui_helpers.dart';
 import 'package:e_commerce/ui/widgets/dumb/ProductWidget.dart';
 import 'package:flutter/material.dart';
@@ -47,11 +47,17 @@ class FavoritesView extends StackedView<FavoritesViewModel> {
                       product:
                           viewModel.convertFavProductObjectToMapProductHelper(
                               viewModel.favProducts[index]),
-                      onAddTap: () {},
+                      onAddTap: () async {
+                        await viewModel.addProductTocart(
+                            convertFavProductObjectToMapProduct(
+                                viewModel.favProducts[index]));
+                      },
                       onFavTap: () async => viewModel.deleteFromFavProducts(
                           viewModel.favProducts[index].code),
                       isLiked: true,
-                    );
+                    ).gestures(onTap: () {
+                      viewModel.goToProductDetailsView(productsList[index]);
+                    });
                   },
                 ).width(pSw(context: context)).expanded()
               : Column(

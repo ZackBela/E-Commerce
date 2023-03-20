@@ -74,12 +74,18 @@ class ProductDetailsView extends StackedView<ProductDetailsViewModel> {
                     size: pSh(context: context, percentage: .025),
                     color: kcTextColor,
                   ),
-                  SvgPicture.asset(
-                    'assets/icons/heart (1).svg',
+                  Image.asset(
+                    'assets/icons/icons8-favorite-50.png',
                     color: viewModel.favProductsIds.contains(1)
                         ? Colors.red
-                        : kcLightGrey,
-                  ).gestures(onTap: () async {
+                        : kcMediumGrey.withOpacity(.5),
+                    height: pSh(context: context, percentage: .03),
+                  )
+                      .padding(
+                    all: pSh(context: context, percentage: .009),
+                    // right: pSh(context: context, percentage: .009),
+                  )
+                      .gestures(onTap: () async {
                     viewModel.favProductsIds.contains(product['id'])
                         ? await viewModel.deleteFromFavProducts(product['id'])
                         : await viewModel.addToFavProducts(product);

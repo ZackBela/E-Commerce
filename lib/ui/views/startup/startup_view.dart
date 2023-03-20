@@ -1,3 +1,5 @@
+import 'package:e_commerce/ui/common/app_colors.dart';
+import 'package:e_commerce/ui/widgets/dumb/CustomText.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:stacked/stacked.dart';
@@ -19,29 +21,33 @@ class StartupView extends StackedView<StartupViewModel> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              'STACKED',
-              style: TextStyle(
-                fontSize: 40,
-                fontWeight: FontWeight.w900,
-              ),
+            Image.asset(
+              'assets/images/shopping-bag (1).png',
+              height: pSh(context: context, percentage: .18),
+            ),
+            verticalSpaceMedium,
+            CustomText(
+              text: 'E-Commerce',
+              size: pSh(context: context, percentage: .028),
             ),
             Row(
               mainAxisSize: MainAxisSize.min,
-              children: const [
-                Text(
-                  'Loading ...',
-                  style: TextStyle(
-                    fontSize: 16,
+              children: [
+                CustomText(
+                  text: 'Loading ...',
+                  size: pSh(
+                    context: context,
+                    percentage: .018,
                   ),
+                  color: kcPrimaryColor,
                 ),
                 horizontalSpaceSmall,
-                SizedBox(
+                const SizedBox(
                   width: 16,
                   height: 16,
                   child: CircularProgressIndicator(
-                    color: Colors.black,
-                    strokeWidth: 6,
+                    color: kcPrimaryColor,
+                    strokeWidth: 2,
                   ),
                 )
               ],

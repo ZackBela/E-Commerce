@@ -1,3 +1,4 @@
+import 'package:e_commerce/ui/views/products_page/products_page_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stacked/stacked.dart';
@@ -10,10 +11,10 @@ import '../../widgets/dumb/CustomText.dart';
 import '../../widgets/dumb/CustomTextField.dart';
 import '../../widgets/dumb/ProductWidget.dart';
 import '../../widgets/dumb/categoryChip.dart';
-import 'products_page_viewmodel.dart';
 
 class ProductsPageView extends StackedView<ProductsPageViewModel> {
-  const ProductsPageView({Key? key}) : super(key: key);
+  ProductsPageView({Key? key}) : super(key: key);
+  TextEditingController? textEditingController;
 
   @override
   Widget builder(
@@ -57,6 +58,7 @@ class ProductsPageView extends StackedView<ProductsPageViewModel> {
           ),
           verticalSpaceMedium,
           CustomTextField(
+            texteditingController: textEditingController,
             hintText: 'Search products',
             textInputAction: TextInputAction.done,
             prefix: SvgPicture.asset(
@@ -65,7 +67,7 @@ class ProductsPageView extends StackedView<ProductsPageViewModel> {
             ).padding(
               all: pSh(context: context, percentage: .018),
             ),
-            // prefixIcon: Icons.search,
+            onchanged: (e) => viewModel.onSearchKeyWordChanged(e),
           ),
           verticalSpaceMedium,
           ListView.builder(
@@ -75,6 +77,11 @@ class ProductsPageView extends StackedView<ProductsPageViewModel> {
             itemBuilder: (BuildContext context, int index) {
               return CategoryChip(
                 category: categoriesList[index],
+                isSelected: viewModel.categorySelected ==
+                    categoriesList[index]['label'],
+              ).gestures(
+                onTap: () => viewModel
+                    .changeSelectedCategory(categoriesList[index]['label']!),
               );
             },
           ).width(pSw(context: context)).height(
@@ -88,14 +95,42 @@ class ProductsPageView extends StackedView<ProductsPageViewModel> {
               childAspectRatio: .65,
             ),
             physics: BouncingScrollPhysics(),
-            itemCount: productsList.length,
+            itemCount: viewModel.categorySelected != 'All'
+                ? productsList
+                    .where((element) =>
+                        element['category'] == viewModel.categorySelected &&
+                        element['title']
+                            .toString()
+                            .toUpperCase()
+                            .contains(viewModel.searchKeyWord.toUpperCase()))
+                    .length
+                : productsList
+                    .where((element) => element['title']
+                        .toString()
+                        .toUpperCase()
+                        .contains(viewModel.searchKeyWord.toUpperCase()))
+                    .length,
             itemBuilder: (BuildContext context, int index) {
               return ProductWidget(
-                product: productsList[index],
-                onAddTap: () {},
-                onFavTap: () {},
-                isLiked: true,
-              );
+                product: viewModel.returnFilteredProduct(index),
+                onAddTap: () async {
+                  await viewModel
+                      .addProductTocart(viewModel.returnFilteredProduct(index));
+                },
+                onFavTap: () async {
+                  viewModel.favProductsIds.contains(
+                          viewModel.returnFilteredProduct(index)["id"])
+                      ? await viewModel.deleteFromFavProducts(
+                          viewModel.returnFilteredProduct(index)["id"])
+                      : await viewModel.addToFavProducts(
+                          viewModel.returnFilteredProduct(index));
+                },
+                isLiked: viewModel.favProductsIds
+                    .contains(viewModel.returnFilteredProduct(index)["id"]),
+              ).gestures(onTap: () {
+                viewModel.goToProductDetailsView(
+                    viewModel.returnFilteredProduct(index));
+              });
             },
           ).width(pSw(context: context)).expanded(),
         ],
@@ -108,4 +143,11 @@ class ProductsPageView extends StackedView<ProductsPageViewModel> {
     BuildContext context,
   ) =>
       ProductsPageViewModel();
+  @override
+  void onViewModelReady(ProductsPageViewModel viewModel) {
+    textEditingController =
+        TextEditingController(text: viewModel.searchKeyWord);
+    viewModel.listenToFavProducts();
+    super.onViewModelReady(viewModel);
+  }
 }

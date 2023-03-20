@@ -1,14 +1,15 @@
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../../../app/app.dialogs.dart';
 import '../../../app/app.locator.dart';
-import '../../../local_Db/favProduct.dart';
 import '../../../services/local_db_services_service.dart';
 import '../../common/helper_methodes.dart';
 
 class ProductDetailsViewModel extends ReactiveViewModel {
   final _navigationService = locator<NavigationService>();
   final _local_db_Service = locator<LocalDbServicesService>();
+  final _dialogService = locator<DialogService>();
 
   int _counter = 1;
   int get counter => _counter;
@@ -28,7 +29,7 @@ class ProductDetailsViewModel extends ReactiveViewModel {
   deleteFromFavProducts(var id) async {
     await _local_db_Service.deleteFavoriteProduct(code: id);
 
-    _favProductsIds.remove(id);
+    _favProductsIds.clear();
     print('_favProductsIds ${_favProductsIds}');
     rebuildUi();
   }
@@ -40,14 +41,28 @@ class ProductDetailsViewModel extends ReactiveViewModel {
   }
 
   addProductTocart(Map<String, dynamic> product) async {
-    await _local_db_Service.addNewCartItem(
-        item: convertMapProductToCartItemObject(product, _counter));
-    _navigationService.back();
-    rebuildUi();
+    bool itemExist =
+        await _local_db_Service.testIfCartContainsItem(product['title']);
+    itemExist == true
+        ? productAlreadyInTheCartDialogue()
+        : {
+            await _local_db_Service.addNewCartItem(
+                item: convertMapProductToCartItemObject(product, _counter)),
+            _navigationService.back(),
+            rebuildUi(),
+          };
   }
 
   void goBack() {
     _navigationService.back();
+  }
+
+  void productAlreadyInTheCartDialogue() {
+    _dialogService.showCustomDialog(
+      variant: DialogType.productExistInCart,
+      title: 'Ding Ding',
+      description: 'This product is already in the cart',
+    );
   }
 
   void incrementCounter() {

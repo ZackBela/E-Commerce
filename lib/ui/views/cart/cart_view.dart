@@ -20,13 +20,26 @@ class CartView extends StackedView<CartViewModel> {
     return Scaffold(
       backgroundColor: kcBackgroundColor,
       appBar: AppBar(
-          backgroundColor: kcBackgroundColor,
-          elevation: 0.0,
-          title: CustomText(
-            text: 'My Cart',
-            weight: FontWeight.w600,
-            size: pSh(context: context, percentage: .02),
-          )),
+        backgroundColor: kcBackgroundColor,
+        elevation: 0.0,
+        title: CustomText(
+          text: 'My Cart',
+          weight: FontWeight.w600,
+          size: pSh(context: context, percentage: .02),
+        ),
+        actions: [
+          viewModel.cartItems.isNotEmpty
+              ? Icon(
+                  Icons.delete,
+                  color: Colors.red,
+                )
+                  .padding(right: pSh(context: context, percentage: .03))
+                  .gestures(onTap: () {
+                  viewModel.clearCartConfirmation();
+                })
+              : Container(),
+        ],
+      ),
       body: viewModel.cartItems.isNotEmpty
           ? Column(
               children: [
@@ -36,6 +49,22 @@ class CartView extends StackedView<CartViewModel> {
                   itemBuilder: (BuildContext context, int index) {
                     return cartItem(
                       product: viewModel.cartItems[index],
+                      onminusTap: () async {
+                        viewModel.cartItems[index].quantite == 1
+                            ? viewModel.showdeleteConfirmationSheet(
+                                viewModel.cartItems[index].id)
+                            : {
+                                viewModel.setTotal(0),
+                                viewModel.updateCartItem(
+                                    viewModel.cartItems[index],
+                                    viewModel.cartItems[index].quantite! - 1)
+                              };
+                      },
+                      onplusTap: () async {
+                        viewModel.setTotal(0);
+                        viewModel.updateCartItem(viewModel.cartItems[index],
+                            viewModel.cartItems[index].quantite! + 1);
+                      },
                     );
                   },
                 ).width(pSw(context: context)).expanded(),
@@ -54,7 +83,7 @@ class CartView extends StackedView<CartViewModel> {
                       color: kcTextColor.withOpacity(.4),
                     ),
                     CustomText(
-                      text: '£199.99',
+                      text: '£${viewModel.total}',
                       weight: FontWeight.w600,
                       size: pSh(context: context, percentage: .017),
                     ),
@@ -81,21 +110,6 @@ class CartView extends StackedView<CartViewModel> {
                 Divider(
                   color: kcTextColor.withOpacity(.4),
                 ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [
-                //     CustomText(
-                //       text: 'Total:',
-                //       weight: FontWeight.w600,
-                //       size: pSh(context: context, percentage: .016),
-                //     ),
-                //     CustomText(
-                //       text: '£199.99',
-                //       weight: FontWeight.w600,
-                //       size: pSh(context: context, percentage: .017),
-                //     ),
-                //   ],
-                // ),
                 verticalSpaceSmall,
                 verticalSpaceSmall,
                 Row(
@@ -108,7 +122,7 @@ class CartView extends StackedView<CartViewModel> {
                       color: kcBackgroundColor,
                     ),
                     CustomText(
-                      text: '£199.99',
+                      text: '£${viewModel.total - viewModel.total * .3}',
                       weight: FontWeight.w600,
                       size: pSh(context: context, percentage: .017),
                       color: kcBackgroundColor,
