@@ -29,7 +29,7 @@ class ProductWidget extends StatelessWidget {
             Image.asset(
               product!["thumbnail"],
               fit: BoxFit.cover,
-            ).padding(all: pSh(context: context, percentage: .02)).center(),
+            ).padding(all: pSh(context: context, percentage: .029)).center(),
             Container(
               child: Image.asset(
                 'assets/icons/icons8-favorite-50.png',

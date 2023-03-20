@@ -92,7 +92,7 @@ class ProductsPageView extends StackedView<ProductsPageViewModel> {
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               mainAxisSpacing: 6,
-              childAspectRatio: .65,
+              childAspectRatio: .645,
             ),
             physics: BouncingScrollPhysics(),
             itemCount: viewModel.categorySelected != 'All'
