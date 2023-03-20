@@ -1,5 +1,6 @@
 import 'package:e_commerce/ui/common/app_colors.dart';
 import 'package:e_commerce/ui/common/ui_helpers.dart';
+import 'package:e_commerce/ui/widgets/dumb/CustomText.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:styled_widget/styled_widget.dart';

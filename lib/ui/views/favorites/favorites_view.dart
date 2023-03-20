@@ -1,3 +1,4 @@
+import 'package:e_commerce/ui/common/app_colors.dart';
 import 'package:e_commerce/ui/common/constant_data.dart';
 import 'package:e_commerce/ui/common/helper_methodes.dart';
 import 'package:e_commerce/ui/common/ui_helpers.dart';
@@ -21,6 +22,7 @@ class FavoritesView extends StackedView<FavoritesViewModel> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -32,7 +34,17 @@ class FavoritesView extends StackedView<FavoritesViewModel> {
               ),
             ],
           ),
-          verticalSpaceLarge,
+          verticalSpaceMedium,
+          viewModel.favProducts.isNotEmpty
+              ? CustomText(
+                  text:
+                      'Favorites products ( ${viewModel.favProducts.length} )',
+                  weight: FontWeight.w500,
+                  size: pSh(context: context, percentage: .018),
+                  color: kcPrimaryColorDark,
+                )
+              : Container(),
+          verticalSpaceMedium,
           viewModel.favProducts.isNotEmpty
               ? GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -73,7 +85,7 @@ class FavoritesView extends StackedView<FavoritesViewModel> {
                       size: pSh(context: context, percentage: .018),
                     ),
                   ],
-                ).expanded(),
+                ).center().expanded(),
         ],
       ).safeArea().padding(all: pSh(context: context, percentage: .025)),
     );
