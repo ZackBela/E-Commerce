@@ -22,6 +22,7 @@ class CartView extends StackedView<CartViewModel> {
       appBar: AppBar(
         backgroundColor: kcBackgroundColor,
         elevation: 0.0,
+        centerTitle: true,
         title: CustomText(
           text: 'My Cart',
           weight: FontWeight.w600,

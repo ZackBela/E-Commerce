@@ -30,6 +30,7 @@ class BottomNavBarButton extends StatelessWidget {
               width: screenWidth(context) * .06,
               icon!,
               color: tabColor,
+              fit: BoxFit.cover,
             ),
             verticalSpaceTiny,
             Text(

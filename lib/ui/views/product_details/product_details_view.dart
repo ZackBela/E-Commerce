@@ -204,9 +204,10 @@ class ProductDetailsView extends StackedView<ProductDetailsViewModel> {
           verticalSpaceSmall,
           Divider(),
           verticalSpaceSmall,
+          Spacer(),
           Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
             SvgPicture.asset(
-              'assets/icons/heart (1).svg',
+              'assets/icons/shopping-cart.svg',
               height: pSh(context: context, percentage: .022),
               color: kcBackgroundColor,
             ),
